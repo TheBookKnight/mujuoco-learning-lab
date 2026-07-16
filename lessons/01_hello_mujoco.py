@@ -9,7 +9,7 @@ import mujoco
 
 def main():
     # 1. Load the static model from the XML file
-    model = mujoco.MjModel.from_xml_path("../assets/hello_mujoco.xml")
+    model = mujoco.MjModel.from_xml_path("../assets/hello_mujoco_L1.xml")
     
     # 2. Create the dynamic state (data) object based on the model
     data = mujoco.MjData(model)
