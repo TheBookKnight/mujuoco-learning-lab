@@ -1,1 +1,38 @@
-# mujuoco-learning-lab
+# MuJoCo Learning Lab
+
+Welcome to the **MuJoCo Learning Lab**! This repository is a dedicated space for learning, experimenting, and mastering physical simulations using the [MuJoCo](https://mujoco.org/) physics engine via its Python bindings. It walks through loading models, inspecting state variables, robust data access, and synchronizing physics pipelines with sensor updates.
+
+---
+
+## Lessons Summary
+
+### 1. [Lesson 1: Hello MuJoCo](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/lessons/01_hello_mujoco.py)
+* **Script:** [01_hello_mujoco.py](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/lessons/01_hello_mujoco.py)
+* **XML Model:** [hello_mujoco_L1.xml](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/assets/hello_mujoco_L1.xml)
+* **Focus:** Basic simulation setup. 
+* **Details:** Demonstrates loading a static 3D model XML (a falling box with a free joint), creating the dynamic simulation state (`mujoco.MjData`), stepping the simulation forward using `mujoco.mj_step`, and querying basic generalized position coordinate states (`data.qpos`) such as the box's Z-altitude.
+
+### 2. [Lesson 2: Robust State Access](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/lessons/02_robust_state.py)
+* **Script:** [02_robust_state.py](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/lessons/02_robust_state.py)
+* **XML Model:** [hello_mujoco_L2.xml](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/assets/hello_mujoco_L2.xml)
+* **Focus:** Programmatic named access to joints and sensors.
+* **Details:** Explores robust ways to retrieve coordinate and sensor data by name, avoiding hardcoded absolute offsets into the global `data.qpos` and `data.sensordata` arrays. It shows two main access methods:
+  * **Joint Access:** Using `.joint("box_joint").qpos` to query the joint's local state slice.
+  * **Sensor Access:** Using `.sensor("box_position").data` to isolate specific sensor readings.
+
+### 3. [Lesson 3: Physics and Sensor Consistency](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/lessons/03_consistency.py)
+* **Script:** [03_consistency.py](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/lessons/03_consistency.py)
+* **XML Model:** [hello_mujoco_L2.xml](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/assets/hello_mujoco_L2.xml)
+* **Focus:** Fixing the pipeline lag between physics state and sensor data.
+* **Details:** Resolves the pipeline lag where `mujoco.mj_step` advances positions and velocities to the next timestep $t+1$, but sensor readings remain evaluated using the previous timestep $t$. Calling `mujoco.mj_forward` immediately after `mj_step` re-evaluates kinematics, sensors, and accelerations, ensuring that both joint values and sensor data are perfectly synchronized at the exact same moment in time.
+
+---
+
+## Running the Lessons
+
+To run any of the lessons, you can use `uv run`:
+
+```bash
+cd lessons
+uv run <lesson_filename.py>
+```
