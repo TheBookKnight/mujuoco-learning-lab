@@ -1,0 +1,22 @@
+<mujoco>
+  <worldbody>
+    <body name="falling_box" pos="0 0 1">
+      <!-- Changed from freejoint to a slide joint moving only along the Z-axis -->
+      <joint name="box_joint" type="slide" axis="0 0 1"/>
+      <!-- Added a mass attribute so we know exactly how much gravity to fight -->
+      <geom type="box" size="0.1 0.1 0.1" rgba="0.8 0.2 0.2 1" mass="1.0"/>
+    </body>
+    
+    <site name="target" type="sphere" pos="0 0 0.2" size="0.05" rgba="0 1 0 1"/>
+  </worldbody>
+
+  <sensor>
+    <framepos name="box_position" objtype="body" objname="falling_box"/>
+  </sensor>
+
+  <!-- NEW: The muscles of our robot -->
+  <actuator>
+    <!-- A direct-drive motor that applies linear force to our slide joint -->
+    <motor name="box_motor" joint="box_joint"/>
+  </actuator>
+</mujoco>

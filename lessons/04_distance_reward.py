@@ -1,3 +1,17 @@
+"""
+This file introduces the concept of a "reward" function.
+
+Instead of just watching the box fall, we now define a goal: get close to the green target sphere.
+We calculate the 3D distance between the box and the target at every step.
+We use negative distance as the reward, meaning the reward gets "less negative" (better) as we get closer to the target.
+
+* Note: There is currently no controller or actuator in this simulation to affect the box's position, so it will simply fall under gravity past the target.
+
+To run this code:
+1. Navigate to the directory containing this file: cd /Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/lessons
+2. Run the script: uv run 04_distance_reward.py
+"""
+
 import mujoco
 import numpy as np
 

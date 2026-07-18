@@ -34,6 +34,15 @@ Welcome to the **MuJoCo Learning Lab**! This repository is a dedicated space for
   * **Site Access:** Using `data.site("target").xpos` to retrieve the target's 3D position vector.
   * **Dense Reward:** Computes the negative Euclidean distance as a continuous dense reward, which provides feedback at every step (getting "warmer" or "colder" as it approaches the target). Because the simulation lacks actuators, the box simply free-falls past the target due to gravity.
 
+### 5. [Lesson 5: Actuation & Proportional (P) Control](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/lessons/05_actuation.py)
+* **Script:** [05_actuation.py](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/lessons/05_actuation.py)
+* **XML Model:** [hello_mujoco_L5.xml](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/assets/hello_mujoco_L5.xml)
+* **Focus:** Introducing actuators and closing the loop using feedback control.
+* **Details:** Connects a virtual motor actuator to the slide joint of the box to actively counteract gravity and drive the box towards the target altitude:
+  * **P Controller:** Implements a simple Proportional (P) controller that applies force based on the position error along the Z-axis: `data.ctrl[0] = Kp * z_error`.
+  * **Behavior & Limitations:** The system exhibits sustained oscillations around the target and does not settle. This is because a P-only controller acts like a frictionless spring (providing restoring force but no energy dissipation/damping). Additionally, because of gravity, a pure P-controller will experience a steady-state error (offset) because it needs a non-zero error to output enough force to counteract gravity.
+  * **Damping Resolution:** To stabilize the system, a **Derivative (D)** term (damping) must be introduced to oppose velocity. By measuring the joint velocity via `data.qvel[0]`, you can implement a Proportional-Derivative (PD) controller: `data.ctrl[0] = Kp * z_error - Kd * box_z_vel`, which removes the oscillations and allows the box to settle.
+
 ---
 
 ## Running the Lessons
