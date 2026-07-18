@@ -52,13 +52,31 @@ Welcome to the **MuJoCo Learning Lab**! This repository is a dedicated space for
   * **PD Controller:** Implements a proportional-derivative control law where $u(t) = K_p(e_p) + K_d(e_v)$, where the error velocity is $0.0 - \text{box\_velocity\_z}$.
   * **Damping Effect:** Explores how the derivative term acts as a virtual shock absorber/viscous damper, dissipating kinetic energy and successfully settling the box at the target height without sustained oscillations.
 
+### 7. [Lesson 7: Passive Viewer Visualization](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/lessons/07_visualization.py)
+* **Script:** [07_visualization.py](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/lessons/07_visualization.py)
+* **XML Model:** [hello_mujoco_L6.xml](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/assets/hello_mujoco_L6.xml)
+* **Focus:** Visualizing the simulation in real time using MuJoCo's interactive passive viewer.
+* **Details:** Integrates real-time visual feedback with the PD control agent loop:
+  * **Passive Viewer Integration:** Launches the viewer in a separate thread via `mujoco.viewer.launch_passive(model, data)` and synchronizes the physics state to the rendering pipeline at each step using `viewer.sync()`.
+  * **macOS Thread Constraints:** Addresses macOS Cocoa framework limitations requiring GUI operations to run on the main thread, necessitating the use of the `mjpython` interpreter wrapper (e.g., `uv run mjpython 07_visualization.py`).
+  * **Real-time Pacing:** Throttles the loop execution using dynamic sleep time based on the model's timestep option (`model.opt.timestep`) to align simulation time with real-world time.
+
 ---
 
 ## Running the Lessons
 
-To run any of the lessons, you can use `uv run`:
+To run any of the lessons, navigate to the `lessons` directory:
 
 ```bash
 cd lessons
-uv run <lesson_filename.py>
 ```
+
+* **Standard Script:**
+  ```bash
+  uv run <lesson_filename.py>
+  ```
+* **Interactive Viewer (macOS):**
+  For scripts launching the passive viewer (like Lesson 7), macOS thread constraints require running under the `mjpython` wrapper:
+  ```bash
+  uv run mjpython <lesson_filename.py>
+  ```
