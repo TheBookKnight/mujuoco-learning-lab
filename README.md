@@ -43,6 +43,15 @@ Welcome to the **MuJoCo Learning Lab**! This repository is a dedicated space for
   * **Behavior & Limitations:** The system exhibits sustained oscillations around the target and does not settle. This is because a P-only controller acts like a frictionless spring (providing restoring force but no energy dissipation/damping). Additionally, because of gravity, a pure P-controller will experience a steady-state error (offset) because it needs a non-zero error to output enough force to counteract gravity.
   * **Damping Resolution:** To stabilize the system, a **Derivative (D)** term (damping) must be introduced to oppose velocity. By measuring the joint velocity via `data.qvel[0]`, you can implement a Proportional-Derivative (PD) controller: `data.ctrl[0] = Kp * z_error - Kd * box_z_vel`, which removes the oscillations and allows the box to settle.
 
+### 6. [Lesson 6: Proportional-Derivative (PD) Control](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/lessons/06_pd_control.py)
+* **Script:** [06_pd_control.py](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/lessons/06_pd_control.py)
+* **XML Model:** [hello_mujoco_L6.xml](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/assets/hello_mujoco_L6.xml)
+* **Focus:** Implementation of a full PD (Proportional-Derivative) controller to add damping and stabilize the system.
+* **Details:** Builds upon the actuation ideas by implementing a full PD loop using the new velocity sensor to stabilize the box at the target altitude:
+  * **Velocity Sensing:** Utilizes a `<framelinvel>` sensor (`box_velocity`) to measure the box's 3D velocity vector directly.
+  * **PD Controller:** Implements a proportional-derivative control law where $u(t) = K_p(e_p) + K_d(e_v)$, where the error velocity is $0.0 - \text{box\_velocity\_z}$.
+  * **Damping Effect:** Explores how the derivative term acts as a virtual shock absorber/viscous damper, dissipating kinetic energy and successfully settling the box at the target height without sustained oscillations.
+
 ---
 
 ## Running the Lessons
