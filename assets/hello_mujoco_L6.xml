@@ -1,0 +1,19 @@
+<mujoco>
+  <worldbody>
+    <body name="falling_box" pos="0 0 1">
+      <joint name="box_joint" type="slide" axis="0 0 1"/>
+      <geom type="box" size="0.1 0.1 0.1" rgba="0.8 0.2 0.2 1" mass="1.0"/>
+    </body>
+    <site name="target" type="sphere" pos="0 0 0.2" size="0.05" rgba="0 1 0 1"/>
+  </worldbody>
+
+  <sensor>
+    <framepos name="box_position" objtype="body" objname="falling_box"/>
+    <!-- NEW: Sensor to read the 3D linear velocity of the box -->
+    <framelinvel name="box_velocity" objtype="body" objname="falling_box"/>
+  </sensor>
+
+  <actuator>
+    <motor name="box_motor" joint="box_joint"/>
+  </actuator>
+</mujoco>
