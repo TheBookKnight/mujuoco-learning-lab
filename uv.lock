@@ -99,10 +99,14 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "mujoco" },
+    { name = "numpy" },
 ]
 
 [package.metadata]
-requires-dist = [{ name = "mujoco", specifier = ">=3.10.0" }]
+requires-dist = [
+    { name = "mujoco", specifier = ">=3.10.0" },
+    { name = "numpy", specifier = ">=2.5.1" },
+]
 
 [[package]]
 name = "numpy"

@@ -1,0 +1,15 @@
+<mujoco>
+  <worldbody>
+    <body name="falling_box" pos="0 0 1">
+      <freejoint name="box_joint"/>
+      <geom type="box" size="0.1 0.1 0.1" rgba="0.8 0.2 0.2 1"/>
+    </body>
+    
+    <!-- A fixed location as our goal target -->
+    <site name="target" type="sphere" pos="0 0 0.2" size="0.05" rgba="0 1 0 1"/>
+  </worldbody>
+
+  <sensor>
+    <framepos name="box_position" objtype="body" objname="falling_box"/>
+  </sensor>
+</mujoco>

@@ -26,6 +26,14 @@ Welcome to the **MuJoCo Learning Lab**! This repository is a dedicated space for
 * **Focus:** Fixing the pipeline lag between physics state and sensor data.
 * **Details:** Resolves the pipeline lag where `mujoco.mj_step` advances positions and velocities to the next timestep $t+1$, but sensor readings remain evaluated using the previous timestep $t$. Calling `mujoco.mj_forward` immediately after `mj_step` re-evaluates kinematics, sensors, and accelerations, ensuring that both joint values and sensor data are perfectly synchronized at the exact same moment in time.
 
+### 4. [Lesson 4: Distance Reward](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/lessons/04_distance_reward.py)
+* **Script:** [04_distance_reward.py](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/lessons/04_distance_reward.py)
+* **XML Model:** [hello_mujoco_L4.xml](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/assets/hello_mujoco_L4.xml)
+* **Focus:** Implementation of a continuous dense reward function based on target distance.
+* **Details:** Introduces a target `<site>` in the XML model and computes the Euclidean distance between the falling box and this target at each simulation step:
+  * **Site Access:** Using `data.site("target").xpos` to retrieve the target's 3D position vector.
+  * **Dense Reward:** Computes the negative Euclidean distance as a continuous dense reward, which provides feedback at every step (getting "warmer" or "colder" as it approaches the target). Because the simulation lacks actuators, the box simply free-falls past the target due to gravity.
+
 ---
 
 ## Running the Lessons
