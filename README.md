@@ -61,6 +61,15 @@ Welcome to the **MuJoCo Learning Lab**! This repository is a dedicated space for
   * **macOS Thread Constraints:** Addresses macOS Cocoa framework limitations requiring GUI operations to run on the main thread, necessitating the use of the `mjpython` interpreter wrapper (e.g., `uv run mjpython 07_visualization.py`).
   * **Real-time Pacing:** Throttles the loop execution using dynamic sleep time based on the model's timestep option (`model.opt.timestep`) to align simulation time with real-world time.
 
+### 8. [Lesson 8: Design Review - Strict API & Encapsulation](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/lessons/08_design_review.py)
+* **Script:** [08_design_review.py](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/lessons/08_design_review.py)
+* **XML Model:** [hello_mujoco_L6.xml](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/assets/hello_mujoco_L6.xml)
+* **Focus:** Designing a clean, encapsulated Gym-like environment wrapper to isolate the physics simulation from the control logic.
+* **Details:** Refactors the simulation code into a structured Python class:
+  * **Encapsulation & Security:** Implements a `BoxHoverEnv` class that hides direct access to the raw `mjData` and `mjModel` variables from the agent. The agent interacts with the simulation strictly through standard `reset()` and `step()` methods.
+  * **Solving Pipeline Lag:** Explores why `mj_forward` must be called at the end of every step to sync Cartesian coordinates and sensor values immediately after `mj_step` integrates the position and velocity.
+  * **Memory View Defense:** Prevents data mutation bugs by copying observation arrays (`.copy()`) rather than returning references to MuJoCo's internal memory views, protecting the agent's historical state tracking.
+
 ---
 
 ## Running the Lessons
@@ -76,7 +85,7 @@ cd lessons
   uv run <lesson_filename.py>
   ```
 * **Interactive Viewer (macOS):**
-  For scripts launching the passive viewer (like Lesson 7), macOS thread constraints require running under the `mjpython` wrapper:
+  For scripts launching the passive viewer (like Lessons 7 and 8), macOS thread constraints require running under the `mjpython` wrapper:
   ```bash
   uv run mjpython <lesson_filename.py>
   ```
