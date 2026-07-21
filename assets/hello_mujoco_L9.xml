@@ -1,0 +1,26 @@
+<mujoco>
+  <worldbody>
+    <!-- NEW: An infinite ground plane -->
+    <geom name="floor" type="plane" size="0 0 1" rgba="0.5 0.5 0.5 1"/>
+
+    <body name="falling_box" pos="0 0 1">
+      <joint name="box_joint" type="slide" axis="0 0 1"/>
+      <geom type="box" size="0.1 0.1 0.1" rgba="0.8 0.2 0.2 1" mass="1.0"/>
+      
+      <!-- NEW: A site defining the active zone for our touch sensor -->
+      <site name="box_touch_zone" type="box" size="0.101 0.101 0.101" rgba="0 0 1 0.1"/>
+    </body>
+  </worldbody>
+
+  <sensor>
+    <framepos name="box_position" objtype="body" objname="falling_box"/>
+    <framelinvel name="box_velocity" objtype="body" objname="falling_box"/>
+    
+    <!-- NEW: A touch sensor measuring normal force inside the site -->
+    <touch name="box_touch" site="box_touch_zone"/>
+  </sensor>
+
+  <actuator>
+    <motor name="box_motor" joint="box_joint"/>
+  </actuator>
+</mujoco>

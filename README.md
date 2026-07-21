@@ -70,6 +70,16 @@ Welcome to the **MuJoCo Learning Lab**! This repository is a dedicated space for
   * **Solving Pipeline Lag:** Explores why `mj_forward` must be called at the end of every step to sync Cartesian coordinates and sensor values immediately after `mj_step` integrates the position and velocity.
   * **Memory View Defense:** Prevents data mutation bugs by copying observation arrays (`.copy()`) rather than returning references to MuJoCo's internal memory views, protecting the agent's historical state tracking.
 
+### 9. [Lesson 9: Contacts & Touch Sensors](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/lessons/09_contacts.py)
+* **Script:** [09_contacts.py](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/lessons/09_contacts.py)
+* **XML Model:** [hello_mujoco_L9.xml](file:///Users/joshuacadavez/Documents/GitHub/mujuoco-learning-lab/assets/hello_mujoco_L9.xml)
+* **Focus:** Ground contact interaction and touch sensor integration.
+* **Details:** Introduces collisions, contact geometry, and physical force sensing:
+  * **Ground Geometry:** Declares an infinite ground `<geom name="floor" type="plane" .../>` to support collisions.
+  * **Touch Sensing:** Integrates a `<site>` representing a collision zone around the box geom and attaches a `<touch>` sensor to measure normal contact forces.
+  * **Force Analysis:** Steps through a free-fall collision to track and print transient high-impact forces (impact force > 20.0 N) and the resting contact force (around ~9.05 N) after the box settles on the floor.
+  * **Array Extraction:** Unpacks the single-element numpy array returned by the touch sensor (`obs["touch_force"][0]`) to allow correct scalar comparison and precision formatting in Python.
+
 ---
 
 ## Running the Lessons
